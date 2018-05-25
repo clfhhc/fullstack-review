@@ -16,7 +16,8 @@ app.post('/repos', function (req, res) {
 
   console.log('POST to /repos');
   username = req.body.search;
-  github.getReposByUsername(username);
+  github.getReposByUsername(username).then((data) => {});
+
 });
 
 app.get('/repos', function (req, res) {

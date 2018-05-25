@@ -1,7 +1,7 @@
 const request = require('request');
 const config = require('../config.js');
 
-let getReposByUsername = (userName, callback) => {
+let getReposByUsername = (userName) => {
   // TODO - Use the request module to request repos for a specific
   // user from the github API
   
@@ -16,20 +16,23 @@ let getReposByUsername = (userName, callback) => {
       'Authorization': `token ${config.TOKEN}`,
     },
     qs: {
-      'sort': 'updated',
-      'direction': 'desc'
+      sort: 'updated',
+      direction: 'desc',
     }
   };
   
-  request(options, function(err, res, body) {
-    // console.log('resp: ', res);
-    // console.log("typeof res = ", typeof res);
-    // console.log("typeof body = ", typeof body)
-    // console.log('keys of res = ', Object.keys(res) )
-    // console.log(res.body === body);
-    body = JSON.parse(body);
-    console.log(body[0].name);
+  return new Promise(function(resolve, reject){
+    request(options, function(err, res, body) {
+      // console.log('resp: ', res);
+      // console.log("typeof res = ", typeof res);
+      // console.log("typeof body = ", typeof body)
+      // console.log('keys of res = ', Object.keys(res) )
+      // console.log(res.body === body);
+      if (err) reject(err)
+      resolve(JSON.parse(body));
+    })
   })
+  
 
 }
 
