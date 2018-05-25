@@ -28,12 +28,15 @@ let save = (data) => {
   // This function should save a repo or repos to
   // the MongoDB
   return new Promise((resolve, reject) => {
-    Repo.insertMany(data, (err, docs) => {
-      if (err) reject(err);
+    Repo.insertMany(data, {ordered: false}, (err, docs) => {
+      if (err && err.code !== 11000) reject(err);
       resolve(docs);
+    }).catch((err) => {
+      console.log('Database insert error', err.code, ':', err.message);
+      if (err.code === 11000) resolve();
     })
   })
-  .catch(err => console.log('what the inserting error is:', err))
+  
 }
 
 let loadLatestRepos = (limit) => {
@@ -45,9 +48,9 @@ let loadLatestRepos = (limit) => {
     .exec((err, records) => {
       if (err) reject(err);
       resolve(records);
-    })
+    }).catch(err => console.log('what the loading error is:', err))
   })
-  .catch(err => console.log('what the loading error is:', err))
+  
 }
 
 module.exports = {

@@ -26,9 +26,7 @@ app.post('/repos', function (req, res) {
     .then((docs) => {
       console.log('batch insert successfully');
       
-    }).catch(err => {
-        console.log('insert database err:', err);
-    });
+    })
     res.sendStatus(201);
   });
 
