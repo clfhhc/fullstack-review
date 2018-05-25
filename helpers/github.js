@@ -16,6 +16,7 @@ let getReposByUsername = (userName) => {
       'Authorization': `token ${config.TOKEN}`,
     },
     qs: {
+      type: 'all',
       sort: 'updated',
       direction: 'desc',
     }
@@ -31,6 +32,18 @@ let getReposByUsername = (userName) => {
       if (err) reject(err)
       resolve(JSON.parse(body));
     })
+  }).then((data) => {
+    return Promise.resolve(Object.entries(data).map(([key, value]) => {
+      record = {
+        ownerId: value.owner.id,
+        userName: value.owner.login,
+        repoId: value.id,
+        repoName: value.name,
+        repoHtmlUrl: value["html_url"],
+        updatedAt: new Date(value['updated_at'])
+      }
+      return record;
+    }));
   })
   
 
