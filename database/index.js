@@ -13,7 +13,8 @@ mongoose.connection.once('open', (err) => {
 let repoSchema = mongoose.Schema({
   // TODO: your schema here!
   ownerId: Number,
-  userName: String,
+  ownerName: String,
+  ownerHtmlUrl: String,
   repoId: {type: Number, required: true, unique: true},
   repoName: String,
   repoHtmlUrl: String,
@@ -40,24 +41,13 @@ let loadLatestRepos = (limit) => {
     Repo.find()
     .limit(limit)
     .sort('-updatedAt')
-    .select('userName repoName repoId repoHtmlUrl')
+    .select('ownerName ownerHtmlUrl repoName repoId repoHtmlUrl')
     .exec((err, records) => {
       if (err) reject(err);
       resolve(records);
     })
   })
   .catch(err => console.log('what the loading error is:', err))
-  .then((records) => {
-    let repos = {};
-    records.forEach((record) => {
-      repos[record.repoId] = {
-        repoName: record.repoName,
-        userName: record.userName,
-        repoHtmlUrl: record.repoHtmlUrl
-      }
-    })
-    return repos;
-  })
 }
 
 module.exports = {

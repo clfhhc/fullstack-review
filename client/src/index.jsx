@@ -10,7 +10,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      repos: []
+      repos: [],
+      data: null
     }
   }
 
@@ -25,7 +26,7 @@ class App extends React.Component {
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify({search: term}),
-      success: function(data, dataType) {
+      success: function(data) {
         console.log(`${term} was searched`);
       },
       error: function(error) {
@@ -39,7 +40,7 @@ class App extends React.Component {
       url: repoUrl,
       type: 'GET',
       contentType: 'application/json',
-      success: function(data, dataType) {
+      success: function(data) {
         this.setState({repos: data});
       }.bind(this),
       error:  function(error) {

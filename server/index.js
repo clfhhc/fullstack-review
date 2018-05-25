@@ -25,12 +25,11 @@ app.post('/repos', function (req, res) {
     db.save(records)
     .then((docs) => {
       console.log('batch insert successfully');
-      res.sendStatus(201);
-  }).catch(err => {
-      console.log('insert database err:', err);
-      res.statusCode = 500;
-      res.send(err);
-  });
+      
+    }).catch(err => {
+        console.log('insert database err:', err);
+    });
+    res.sendStatus(201);
   });
 
 });

@@ -36,7 +36,8 @@ let getReposByUsername = (userName) => {
     return Promise.resolve(Object.entries(data).map(([key, value]) => {
       record = {
         ownerId: value.owner.id,
-        userName: value.owner.login,
+        ownerName: value.owner.login,
+        ownerHtmlUrl: value.owner["html_url"],
         repoId: value.id,
         repoName: value.name,
         repoHtmlUrl: value["html_url"],
