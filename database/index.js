@@ -15,7 +15,7 @@ let repoSchema = mongoose.Schema({
   ownerId: Number,
   ownerName: String,
   ownerHtmlUrl: String,
-  repoId: {type: Number, required: true, unique: true},
+  repoId: {type: Number, required: true, unique: true, dropDups: true},
   repoName: String,
   repoHtmlUrl: String,
   updatedAt: Date

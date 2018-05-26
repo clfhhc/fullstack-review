@@ -6,6 +6,7 @@ import RepoList from './components/RepoList.jsx';
 
 const repoUrl = "http://localhost:1128/repos";
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -13,10 +14,17 @@ class App extends React.Component {
       repos: [],
       data: null
     }
+    
+    this.getRepos = this.getRepos.bind(this);
+    this.getReposAuto = () => {
+      this.getRepos();
+      setTimeout(this.getReposAuto, 5000);
+    }
   }
 
   componentDidMount(){
-    this.getRepos();
+    // this.getReposAuto();
+    
   }
 
   search (term) {
@@ -41,6 +49,7 @@ class App extends React.Component {
       type: 'GET',
       contentType: 'application/json',
       success: function(data) {
+        console.log('fetched')
         this.setState({repos: data});
       }.bind(this),
       error:  function(error) {
